@@ -1,0 +1,38 @@
+{
+  "name": "postcss-content-width-unit",
+  "version": "0.0.0",
+  "description": "PostCSS plugin which adds limit to vw unit",
+  "keywords": [
+    "postcss",
+    "css",
+    "postcss-plugin",
+    "unit",
+    "vw",
+    "responsive"
+  ],
+  "author": "Leonard Kinday <leonard@kinday.ru>",
+  "license": "MIT",
+  "repository": "kinday/postcss-content-width-unit",
+  "bugs": {
+    "url": "https://github.com/kinday/postcss-content-width-unit/issues"
+  },
+  "homepage": "https://github.com/kinday/postcss-content-width-unit",
+  "dependencies": {
+    "postcss": "5.2.5"
+  },
+  "devDependencies": {
+    "ava": "0.17.0",
+    "eslint": "3.10.2",
+    "eslint-config-postcss": "2.0.2",
+    "nyc": "9.0.1"
+  },
+  "scripts": {
+    "coverage": "nyc --reporter=lcov npm test",
+    "lint": "eslint *.js",
+    "test": "ava",
+    "tdd": "npm test -- --watch"
+  },
+  "eslintConfig": {
+    "extends": "eslint-config-postcss/es5"
+  }
+}
