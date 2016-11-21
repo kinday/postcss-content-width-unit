@@ -5,6 +5,12 @@ import relativeValue from './relativeValue';
 test('relativeValue', t => {
     t.is(
         relativeValue('$content-max-width', '200'),
+        relativeValue('$content-max-width')('200'),
+        'is curried'
+    );
+
+    t.is(
+        relativeValue('$content-max-width', '200'),
         '200 / $content-max-width * 100',
         'returns expression if given a variable'
     );

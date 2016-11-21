@@ -18,6 +18,10 @@ function createMediaQueryRule(contentMaxWidth, nodes) {
     });
 }
 
+function isWord(node) {
+    return node.type === 'word';
+}
+
 module.exports = postcss.plugin('postcss-content-width-unit', function (opts) {
     opts = opts || {};
 
@@ -28,6 +32,9 @@ module.exports = postcss.plugin('postcss-content-width-unit', function (opts) {
         throw new Error('contentMaxWidth option is mandatory');
     }
 
+    var endsWithUnit = endsWith(unit);
+    var contentRelativeValue = relativeValue(contentMaxWidth);
+
     return function _walkRoot(root) {
         root.walkRules(function _walkRules(rule) {
             var mq = createMediaQueryRule(contentMaxWidth);
@@ -36,7 +43,7 @@ module.exports = postcss.plugin('postcss-content-width-unit', function (opts) {
             rule.walkDecls(function _walkDecls(decl) {
                 var values = parseValue(decl.value).nodes;
                 var transformableValues = values.filter(function (v) {
-                    return endsWith(unit, v.value);
+                    return endsWithUnit(v.value);
                 });
 
                 if (transformableValues.length > 0) {
@@ -45,10 +52,10 @@ module.exports = postcss.plugin('postcss-content-width-unit', function (opts) {
                     parseValue.walk(values, function _walkValues(value) {
                         var mqValue = Object.assign({}, value);
 
-                        if (value.type === 'word' && endsWith(unit, value.value)) {
+                        if (isWord(value) && endsWithUnit(value.value)) {
                             var word = parseUnit(value.value);
 
-                            value.value = relativeValue(contentMaxWidth, word.number);
+                            value.value = contentRelativeValue(word.number);
                             mqValue.value = word.number + 'px';
                         }
 

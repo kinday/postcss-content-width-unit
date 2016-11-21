@@ -3,6 +3,12 @@ import test from 'ava';
 import endsWith from './endsWith';
 
 test('endsWith', t => {
+    t.is(
+        endsWith('rpx', '200rpx'),
+        endsWith('rpx')('200rpx'),
+        'is curried'
+    );
+
     t.truthy(
         endsWith('rpx', '200rpx'),
         '$content-max-width / 200',

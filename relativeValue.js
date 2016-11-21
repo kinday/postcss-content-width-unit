@@ -9,6 +9,12 @@ function isVariable(value) {
 }
 
 module.exports = function relativeValue(contentMaxWidth, value) {
+    if (typeof value === 'undefined') {
+        return function _relativeValue(_value) {
+            return relativeValue(contentMaxWidth, _value);
+        };
+    }
+
     if (isVariable(contentMaxWidth)) {
         return join([value, ' / ', contentMaxWidth, ' * ', '100']);
     }
