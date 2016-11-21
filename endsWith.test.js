@@ -13,4 +13,9 @@ test('endsWith', t => {
         endsWith('rpx', '200px'),
         'is false if string doesn’t end with given pattern'
     );
+
+    t.falsy(
+        endsWith('rpx', 'px'),
+        'is false if string is shorter than given pattern'
+    );
 });
