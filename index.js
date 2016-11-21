@@ -34,25 +34,34 @@ module.exports = postcss.plugin('postcss-content-width-unit', function (opts) {
             var mqRule = rule.cloneAfter({ nodes: [] });
 
             rule.walkDecls(function _walkDecls(decl) {
-                var values = parseValue(decl.value);
-                var mqValues = [];
-
-                values.walk(function _walkValues(value) {
-                    var mqValue = Object.assign({}, value);
-
-                    if (value.type === 'word' && endsWith(unit, value.value)) {
-                        var word = parseUnit(value.value);
-
-                        value.value = relativeValue(contentMaxWidth, value);
-                        mqValue.value = word.number + 'px';
-                    }
-
-                    mqValues.push(mqValue);
+                var values = parseValue(decl.value).nodes;
+                var transformableValues = values.filter(function (v) {
+                    return endsWith(unit, v.value);
                 });
 
-                if (mqValues.length > 0) {
-                    decl.value = values.toString();
-                    mqRule.append(mqValues.toString());
+                if (transformableValues.length > 0) {
+                    var mqValues = [];
+
+                    parseValue.walk(values, function _walkValues(value) {
+                        var mqValue = Object.assign({}, value);
+
+                        if (value.type === 'word' && endsWith(unit, value.value)) {
+                            var word = parseUnit(value.value);
+
+                            value.value = relativeValue(contentMaxWidth, word.number);
+                            mqValue.value = word.number + 'px';
+                        }
+
+                        mqValues.push(mqValue);
+                    });
+
+                    if (mqValues.length > 0) {
+                        decl.value = parseValue.stringify(values);
+                        mqRule.append(postcss.decl({
+                            prop: decl.prop,
+                            value: parseValue.stringify(mqValues)
+                        }));
+                    }
                 }
             });
 
