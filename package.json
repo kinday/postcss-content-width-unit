@@ -22,11 +22,14 @@
   },
   "devDependencies": {
     "ava": "0.17.0",
+    "coveralls": "^2.11.15",
     "eslint": "3.10.2",
     "eslint-config-postcss": "2.0.2",
     "nyc": "9.0.1"
   },
   "scripts": {
+    "ci": "npm run lint && npm test && npm run coveralls",
+    "coveralls": "npm run coverage && nyc report --reporter=text-lcov | coveralls",
     "coverage": "nyc --reporter=lcov npm test",
     "lint": "eslint *.js",
     "test": "ava",

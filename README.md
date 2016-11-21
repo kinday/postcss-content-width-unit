@@ -1,8 +1,12 @@
-# PostCSS Content Width Unit
+# PostCSS Content Width Unit [![Build Status][ci-img]][ci] [![Coverage Status][coveralls-img]][coveralls]
 
 [PostCSS] plugin which adds limit to vw unit.
 
 [PostCSS]: https://github.com/postcss/postcss
+[ci-img]: https://travis-ci.org/kinday/postcss-content-width-unit.svg
+[ci]: https://travis-ci.org/kinday/postcss-content-width-unit
+[coveralls-img]: https://coveralls.io/repos/github/kinday/postcss-content-width-unit/badge.svg?branch=master
+[coveralls]: https://coveralls.io/github/kinday/postcss-content-width-unit?branch=master
 
 ```css
 .foo {
