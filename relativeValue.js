@@ -10,13 +10,13 @@ function isVariable(value) {
 
 module.exports = function relativeValue(contentMaxWidth, value) {
     if (isVariable(contentMaxWidth)) {
-        return join([contentMaxWidth, ' / ', value]);
+        return join([value, ' / ', contentMaxWidth, ' * ', '100']);
     }
 
     if (isValueInPixels(contentMaxWidth)) {
-        var ratio = parseFloat(contentMaxWidth) / parseFloat(value);
+        var ratio = parseFloat(value) / parseFloat(contentMaxWidth) * 100;
         return join([ratio, 'vw']);
     }
 
-    return join(['calc(', contentMaxWidth, ' / ', value, ')']);
+    throw new Error('contentMaxWidth must be either variable or in pixels');
 };
