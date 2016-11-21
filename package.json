@@ -18,7 +18,8 @@
   },
   "homepage": "https://github.com/kinday/postcss-content-width-unit",
   "dependencies": {
-    "postcss": "5.2.5"
+    "postcss": "5.2.5",
+    "postcss-value-parser": "3.3.0"
   },
   "devDependencies": {
     "ava": "0.17.0",

@@ -1,8 +1,10 @@
 .aside {
-    width: 15.625vw;
+    margin: 5em 15.625vw;
+    padding: 15.625vw 31.25vw;
 }
 @media screen and (min-width: 1280px) {
     .aside {
-        width: 200px;
+        margin: 5em 200px;
+        padding: 200px 400px;
     }
 }

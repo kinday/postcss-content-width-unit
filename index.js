@@ -1,7 +1,10 @@
 var endsWith = require('./endsWith');
 var join = require('./join');
+var parseValue = require('postcss-value-parser');
 var postcss = require('postcss');
 var relativeValue = require('./relativeValue');
+
+var parseUnit = parseValue.unit;
 
 function hasDecls(rule) {
     return rule.nodes && rule.nodes.length > 0;
@@ -31,17 +34,26 @@ module.exports = postcss.plugin('postcss-content-width-unit', function (opts) {
             var mqRule = rule.cloneAfter({ nodes: [] });
 
             rule.walkDecls(function _walkDecls(decl) {
-                if (endsWith(unit, decl.value)) {
-                    var value = decl.value.slice(0, -unit.length);
+                var values = parseValue(decl.value);
+                var mqValues = [];
 
-                    decl.value = relativeValue(contentMaxWidth, value);
+                values.walk(function _walkValues(value) {
+                    var mqValue = Object.assign({}, value);
 
-                    mqRule.append(postcss.decl({
-                        prop: decl.prop,
-                        value: value + 'px'
-                    }));
+                    if (value.type === 'word' && endsWith(unit, value.value)) {
+                        var word = parseUnit(value.value);
+
+                        value.value = relativeValue(contentMaxWidth, value);
+                        mqValue.value = word.number + 'px';
+                    }
+
+                    mqValues.push(mqValue);
+                });
+
+                if (mqValues.length > 0) {
+                    decl.value = values.toString();
+                    mqRule.append(mqValues.toString());
                 }
-
             });
 
             if (hasDecls(mqRule)) {
