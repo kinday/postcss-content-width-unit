@@ -28,20 +28,21 @@ function run(t, input, output, opts = { }) {
                     t.deepEqual(result.warnings().length, 0);
                 });
         });
-
 }
 
 test('postcss-content-width-unit', t => {
-    run(
-        t,
-        'fixtures/convert-to-vw-and-mq.input.scss',
-        'fixtures/convert-to-vw-and-mq.output.scss',
-        { contentMaxWidth: '1280px' }
-    );
+    t.plan(3);
 
     t.throws(
         () => postcss([plugin()]).process(''),
         /contentMaxWidth/i,
         'throws if contentMaxWidth option is not set'
+    );
+
+    return run(
+        t,
+        'fixtures/convert-to-vw-and-mq.input.scss',
+        'fixtures/convert-to-vw-and-mq.output.scss',
+        { contentMaxWidth: '1280px' }
     );
 });
