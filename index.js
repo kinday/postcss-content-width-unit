@@ -43,7 +43,9 @@ module.exports = postcss.plugin('postcss-content-width-unit', function (opts) {
             rule.walkDecls(function _walkDecls(decl) {
                 var values = parseValue(decl.value).nodes;
                 var transformableValues = values.filter(function (v) {
-                    return endsWithUnit(v.value);
+                    const isOwn = rule.selector === decl.parent.selector;
+                    const isEndingWithUnit = endsWithUnit(v.value);
+                    return isOwn && isEndingWithUnit;
                 });
 
                 if (transformableValues.length > 0) {

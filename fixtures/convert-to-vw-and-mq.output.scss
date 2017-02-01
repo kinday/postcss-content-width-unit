@@ -1,10 +1,23 @@
 .aside {
-    margin: 5em 15.625vw;
-    padding: 15.625vw 31.25vw;
+	margin: 5em 15.625vw;
+	padding: 15.625vw 31.25vw;
+
+	&__child {
+		margin: 1.5625vw;
+	}
+
+	@media screen and (min-width: 1280px) {
+
+		&__child {
+			margin: 20px;
+		}
+	}
 }
+
 @media screen and (min-width: 1280px) {
-    .aside {
-        margin: 5em 200px;
-        padding: 200px 400px;
-    }
+
+	.aside {
+		margin: 5em 200px;
+		padding: 200px 400px;
+	}
 }

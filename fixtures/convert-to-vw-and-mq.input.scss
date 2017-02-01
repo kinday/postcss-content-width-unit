@@ -1,4 +1,8 @@
 .aside {
-    margin: 5em 200rpx;
-    padding: 200rpx 400rpx;
+	margin: 5em 200rpx;
+	padding: 200rpx 400rpx;
+
+	&__child {
+		margin: 20rpx;
+	}
 }
