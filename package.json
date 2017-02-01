@@ -1,6 +1,6 @@
 {
   "name": "postcss-content-width-unit",
-  "version": "1.0.0-4",
+  "version": "1.0.0-5",
   "description": "PostCSS plugin which adds limit to vw unit",
   "keywords": [
     "postcss",
